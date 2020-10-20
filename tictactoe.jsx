@@ -1,7 +1,12 @@
-import React, { useCallback, useEffect, useReducer, useState } from 'react';
+import React, { useCallback, useEffect, useReducer, createContext, useMemo } from 'react';
 import Table from './table';
 
 import './tictactoe.css';
+
+export const TableContext = createContext({
+    tableData: [],
+    dispatch: ()=>{}
+});
 
 const initialState = {
     winner: '',
@@ -114,11 +119,16 @@ const TicTacToe = () => {
         }
     }, [recentCell])
 
+    const value = useMemo( () => ({
+        tableData: state.tableData,
+        dispatch
+    }), [state.tableData])
+
     return (
-        <>
-            <Table tableData={tableData} dispatch={dispatch} />
+        <TableContext.Provider value={value}>
+            <Table/>
             {winner && <div className="winner">{winner}님의 승리</div>}
-        </>
+        </TableContext.Provider>
     )
 }
 

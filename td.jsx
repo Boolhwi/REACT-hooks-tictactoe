@@ -1,9 +1,12 @@
-import React, {useCallback} from 'react';
-import {CLICK_CELL, SET_TURN} from './tictactoe';
+import React, { useContext } from 'react';
+import {CLICK_CELL} from './tictactoe';
+import {TableContext} from './tictactoe';
 
 import './td.css';
 
-const Td = ({ rowIndex, cellIndex, dispatch, cellData}) => {
+const Td = ({ rowIndex, cellIndex, cellData}) => {
+
+    const {dispatch} = useContext(TableContext)
 
     const onClickTd = () => {
         if(cellData) {
